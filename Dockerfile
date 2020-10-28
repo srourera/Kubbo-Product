@@ -1,10 +1,10 @@
-FROM maven:3-jdk-8-alpine
+FROM maven:3.6.3-jdk-11
 
 WORKDIR /usr/src/app
 
 COPY . /usr/src/app
 RUN mvn package
 
-ENV PORT 5000
+ENV PORT 8001
 EXPOSE $PORT
 CMD [ "sh", "-c", "mvn -Dserver.port=${PORT} spring-boot:run" ]
