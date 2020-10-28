@@ -1,4 +1,4 @@
-package com.kubbo.technicaltest.productservice;
+package com.technicaltest.productservice;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

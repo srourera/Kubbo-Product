@@ -1,4 +1,4 @@
-package com.kubbo.technicaltest.productservice;
+package com.technicaltest.productservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
