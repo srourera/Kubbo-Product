@@ -22,4 +22,9 @@ public class ProductFacade {
         List<ProductEntity> products = productService.getAll();
         return productMapper.productEntityListToProductDataList(products);
     }
+
+    public ProductData getById(Long productId) {
+        ProductEntity product = productService.getById(productId);
+        return productMapper.productEntityToProductData(product);
+    }
 }
