@@ -4,6 +4,7 @@ import com.technicaltest.productservice.dto.ProductData;
 import com.technicaltest.productservice.entity.ProductEntity;
 import com.technicaltest.productservice.mapper.ProductMapper;
 import com.technicaltest.productservice.service.ProductService;
+import com.technicaltest.productservice.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,35 @@ public class ProductFacade {
     public ProductData getById(Long productId) {
         ProductEntity product = productService.getById(productId);
         return productMapper.productEntityToProductData(product);
+    }
+
+    public ProductData create(ProductData productData) {
+        ProductEntity requestBody = productMapper.productDataToProductEntity(productData);
+        if(!Utils.isEmpty(requestBody.getId())){
+            requestBody.setId(null);
+        }
+        ProductEntity product = productService.save(requestBody);
+        return productMapper.productEntityToProductData(product);
+    }
+
+    public ProductData edit(Long productId,ProductData productData) throws Exception {
+        ProductEntity existing = productService.getById(productId);
+        if(Utils.isEmpty(existing.getId())){
+            throw new Exception("Product not found");
+        }
+        ProductEntity requestBody = productMapper.productDataToProductEntity(productData);
+        requestBody.setId(existing.getId());
+
+        ProductEntity product = productService.save(requestBody);
+        return productMapper.productEntityToProductData(product);
+    }
+
+    public void editEnabled(Long productId, Boolean enabled) throws Exception {
+        ProductEntity existing = productService.getById(productId);
+        if(Utils.isEmpty(existing.getId())){
+            throw new Exception("Product not found");
+        }
+        existing.setEnabled(enabled);
+        ProductEntity product = productService.save(existing);
     }
 }

@@ -32,7 +32,7 @@ public class ProductEntity {
     @PrePersist
     public void prePersist() {
         this.id = null;
-        if(Utils.notEmpty(this.enabled)) {
+        if(Utils.isEmpty(this.enabled)) {
             this.enabled = false;
         }
     }

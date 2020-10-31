@@ -19,4 +19,8 @@ public class ProductService {
     public ProductEntity getById(Long productId) {
         return productRepository.findById(productId).orElse(new ProductEntity());
     }
+
+    public ProductEntity save(ProductEntity productEntity) {
+        return productRepository.save(productEntity);
+    }
 }
