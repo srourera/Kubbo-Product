@@ -15,7 +15,7 @@ public class ProductData {
 
     private String barcode;
 
-    private String image;
+    private Long image;
 
     private String price;
 
