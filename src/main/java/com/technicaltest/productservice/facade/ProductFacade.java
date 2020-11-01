@@ -58,4 +58,8 @@ public class ProductFacade {
         existing.setEnabled(enabled);
         ProductEntity product = productService.save(existing);
     }
+
+    public void delete(Long productId) {
+        productService.delete(productId);
+    }
 }
