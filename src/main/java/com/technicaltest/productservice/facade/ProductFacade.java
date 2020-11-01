@@ -7,7 +7,9 @@ import com.technicaltest.productservice.service.ImageService;
 import com.technicaltest.productservice.service.ProductService;
 import com.technicaltest.productservice.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -28,24 +30,27 @@ public class ProductFacade {
         return productMapper.productEntityListToProductDataList(products);
     }
 
-    public ProductData getById(Long productId) {
+    public ProductData getById(Long productId){
         ProductEntity product = productService.getById(productId);
+        if(Utils.isEmpty(product)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This product doesn't exist");
+        }
         return productMapper.productEntityToProductData(product);
     }
 
     public ProductData create(ProductData productData) {
         ProductEntity requestBody = productMapper.productDataToProductEntity(productData);
-        if(!Utils.isEmpty(requestBody.getId())){
+        if(!Utils.isEmpty(requestBody) && !Utils.isEmpty(requestBody.getId())){
             requestBody.setId(null);
         }
         ProductEntity product = productService.save(requestBody);
         return productMapper.productEntityToProductData(product);
     }
 
-    public ProductData edit(Long productId,ProductData productData) throws Exception {
+    public ProductData edit(Long productId,ProductData productData) {
         ProductEntity existing = productService.getById(productId);
-        if(Utils.isEmpty(existing.getId())){
-            throw new Exception("Product not found");
+        if(Utils.isEmpty(existing)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This product doesn't exist");
         }
         if(!Utils.isEmpty(existing.getImage()) && existing.getImage() != productData.getImage()){
             imageService.delete(existing.getImage());
@@ -56,13 +61,13 @@ public class ProductFacade {
         return productMapper.productEntityToProductData(product);
     }
 
-    public void editEnabled(Long productId, Boolean enabled) throws Exception {
+    public void editEnabled(Long productId, Boolean enabled) {
         ProductEntity existing = productService.getById(productId);
-        if(Utils.isEmpty(existing.getId())){
-            throw new Exception("Product not found");
+        if(Utils.isEmpty(existing)){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This product doesn't exist");
         }
         existing.setEnabled(enabled);
-        ProductEntity product = productService.save(existing);
+        productService.save(existing);
     }
 
     public void delete(Long productId) {
@@ -72,6 +77,9 @@ public class ProductFacade {
                 imageService.delete(existing.getImage());
             }
             productService.delete(productId);
+        }
+        else {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "This product doesn't exist");
         }
     }
 }

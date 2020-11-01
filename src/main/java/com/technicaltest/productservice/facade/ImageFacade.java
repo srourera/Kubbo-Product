@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-
 
 @Service
 public class ImageFacade {
@@ -16,7 +14,7 @@ public class ImageFacade {
     @Autowired
     private ImageService imageService;
 
-    public Long upload(MultipartFile file) throws IOException {
+    public Long upload(MultipartFile file) {
         return imageService.upload(file);
     }
     public byte[] get(Long imageId) {

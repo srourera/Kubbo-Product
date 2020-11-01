@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-
 @RestController
 @RequestMapping(
         value = "/image",
@@ -23,7 +21,7 @@ public class ImageController {
     @PostMapping(
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    ResponseEntity<Long> uploadImage(@RequestPart("imageFile") MultipartFile file) throws IOException {
+    ResponseEntity<Long> uploadImage(@RequestPart("imageFile") MultipartFile file) {
         return new ResponseEntity<>(imageFacade.upload(file),HttpStatus.CREATED);
     }
 

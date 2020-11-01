@@ -40,22 +40,22 @@ public class ProductController {
             value = "/{productId}",
             consumes = MediaType.APPLICATION_JSON_VALUE
     )
-    public ResponseEntity<ProductData> editProduct(@PathVariable Long productId, @RequestBody ProductData product) throws Exception {
+    public ResponseEntity<ProductData> editProduct(@PathVariable Long productId, @RequestBody ProductData product) {
         return new ResponseEntity<>(productFacade.edit(productId, product),HttpStatus.CREATED);
     }
 
     @PutMapping(
             value = "/activate/{productId}"
     )
-    public ResponseEntity activateProduct(@PathVariable Long productId) throws Exception {
+    public ResponseEntity activateProduct(@PathVariable Long productId) {
         productFacade.editEnabled(productId,true);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity(HttpStatus.CREATED);
     }
 
     @PutMapping(
             value = "/deactivate/{productId}"
     )
-    public ResponseEntity deactivateProduct(@PathVariable Long productId) throws Exception {
+    public ResponseEntity deactivateProduct(@PathVariable Long productId) {
         productFacade.editEnabled(productId,false);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

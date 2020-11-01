@@ -17,7 +17,7 @@ public class ProductService {
     }
 
     public ProductEntity getById(Long productId) {
-        return productRepository.findById(productId).orElse(new ProductEntity());
+        return productRepository.findById(productId).orElse(null);
     }
 
     public ProductEntity save(ProductEntity productEntity) {
