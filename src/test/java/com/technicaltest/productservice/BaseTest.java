@@ -58,4 +58,20 @@ public abstract class BaseTest {
         Assert.assertEquals(actual.getImage(),expected.getImage());
         Assert.assertEquals(actual.getSku(),expected.getSku());
     }
+
+    protected void assertProductEntityList(List<ProductEntity> actual, List<ProductEntity> expected){
+        Assert.assertEquals(actual.size(),expected.size());
+        for(int i = 0; i < actual.size(); ++i){
+            assertProductEntity(actual.get(0),expected.get(0));
+        }
+    }
+
+    protected void assertProductEntity(ProductEntity actual, ProductEntity expected){
+        Assert.assertEquals(actual.getId(),expected.getId());
+        Assert.assertEquals(actual.getName(),expected.getName());
+        Assert.assertEquals(actual.getBarcode(),expected.getBarcode());
+        Assert.assertEquals(actual.getEnabled(),expected.getEnabled());
+        Assert.assertEquals(actual.getImage(),expected.getImage());
+        Assert.assertEquals(actual.getSku(),expected.getSku());
+    }
 }
